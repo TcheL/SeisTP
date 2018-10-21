@@ -8,7 +8,11 @@ Some seismology minitools and miniprograms.
 
 ## PREM
 
+### Function
+
 Uniformly discrete the Preliminary Reference Earth Model by the fixed depth interval (the thickness of layer).
+
+### Usage
 
 As an example, you can just run the follow command in  **matlab**:
 
@@ -25,7 +29,11 @@ where `hintv` is the depth sampling interval, `h` is the depth from the surface 
 
 ## ReadSAC
 
+### Function
+
 Read a SAC-formatted file.
+
+### Usage
 
 As an example, you can just run the follow command in  **matlab**:
 
@@ -38,6 +46,12 @@ where `h` is file header information of the example file _examples/IC.XAN.00.BH1
 ![ReadSAC('examples/IC.XAN.00.BH1.M.2016.036.195527.SAC')](./figures/IC.XAN_TW20160205.png)
 
 ## US2016VM
+
+### Function
+
+Read USA velocity model from US.2016.nc distributed by [Weisen SHEN](http://ciei.colorado.edu/~weisen/index.html).
+
+### Usage
 
 Firstly, download the model netCDF file `US.2016.nc` from [the webpage](http://ds.iris.edu/files/products/emc/data/US.2016/US.2016.nc).
 
