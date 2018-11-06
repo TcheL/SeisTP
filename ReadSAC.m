@@ -6,7 +6,10 @@ function [sacheader, wavedata] = ReadSAC(filename)
 % filename: a string, the SAC file name.
 
 %% Read the header part of the file
-fid = fopen(filename);
+fid = fopen(filename, 'r');
+if(fid < 0)
+  error(['Can''t open ', filename, ': maybe no such a file.']);
+end
 
 FType = fread(fid,70, 'float');
 NType = fread(fid,15, 'int');
@@ -149,7 +152,7 @@ fclose(fid);
 %% Plot the waveform
 if(1)
     figure; plot(time, wavedata);
-    xlabel('time'); ylabel(cmpname);
+    xlabel('time (s)'); ylabel(cmpname);
     title({['The waveform of ', sacheader.knetwk, '.', sacheader.kstnm, ' of the event ', ...
         sacheader.kevnm, sprintf(' %d/%d/%d', sacheader.nzyear, nzmonth, nzday)], ...
         [sprintf('%d:%d:%.2f (UTC)', nzohour, nzomin, nzosec), ' with \Delta = ', ...
