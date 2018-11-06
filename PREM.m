@@ -207,29 +207,29 @@ qk(n) = 1327.7;
 eta(n) = 1;
 
 if(1)
-  figure; plot(h, vp, h, vs, h, rho);
-  xlabel('Depth (km)'); ylabel('Density (g/cm^3) / Velocity (km/s)');
-  title('Preliminary Reference Earth Model');
-  legend('location', 'East', 'P-wave velocity', 'S-wave velocity', 'Density');
+    figure; plot(h, vp, h, vs, h, rho);
+    xlabel('Depth (km)'); ylabel('Density (g/cm^3) / Velocity (km/s)');
+    title('Preliminary Reference Earth Model');
+    legend('location', 'East', 'P-wave velocity', 'S-wave velocity', 'Density');
 end
 
 if(nargout == 4)
-  varargout{1} = h;
-  varargout{2} = vp;
-  varargout{3} = vs;
-  varargout{4} = rho;
+    varargout{1} = h;
+    varargout{2} = vp;
+    varargout{3} = vs;
+    varargout{4} = rho;
 elseif(nargout == 9)
-  varargout{1} = h;
-  varargout{2} = vph;
-  varargout{3} = vpv;
-  varargout{4} = vsh;
-  varargout{5} = vsv;
-  varargout{6} = rho;
-  varargout{7} = qm;
-  varargout{8} = qk;
-  varargout{9} = eta;
+    varargout{1} = h;
+    varargout{2} = vph;
+    varargout{3} = vpv;
+    varargout{4} = vsh;
+    varargout{5} = vsv;
+    varargout{6} = rho;
+    varargout{7} = qm;
+    varargout{8} = qk;
+    varargout{9} = eta;
 else
-  error('The number of output arguments MUST be 4 or 9.');
+    error('The number of output arguments MUST be 4 or 9.');
 end
 
 end

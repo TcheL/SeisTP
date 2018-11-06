@@ -132,27 +132,28 @@ sacheader.kinst = deblank(KType(:,24)');
     sacheader.nzhour, sacheader.nzmin, sacheader.nzsec + sacheader.o);
 [nzmonth, nzday] = jday2mmdd(sacheader.nzyear, nzojday);
 if(sacheader.cmpaz == 0 && sacheader.cmpinc == 90)
-	cmpname = 'N-S Component';
+    cmpname = 'N-S Component';
 elseif(sacheader.cmpaz == 90 && sacheader.cmpinc == 90)
-	cmpname = 'E-W Component';
+    cmpname = 'E-W Component';
 elseif(sacheader.cmpaz == 0 && sacheader.cmpinc == 0)
-	cmpname = 'U-D Component';
+    cmpname = 'U-D Component';
 else
-	cmpname = 'Can''t automatically identify the component name';
+    cmpname = 'Can''t automatically identify the component name';
 end
 
 %% Read the waveform data
+time = sacheader.delta*(1:1:sacheader.npts);
 wavedata = fread(fid, sacheader.npts, 'float');
 fclose(fid);
 
 %% Plot the waveform
 if(1)
-  figure; plot(wavedata);
-  xlabel('time'); ylabel(cmpname);
-  title({['The waveform of ', sacheader.knetwk, '.', sacheader.kstnm, ' of the event ', ...
-      sacheader.kevnm, sprintf(' %d/%d/%d', sacheader.nzyear, nzmonth, nzday)], ...
-      [sprintf('%d:%d:%.2f (UTC)', nzohour, nzomin, nzosec), ' with \Delta = ', ...
-      sprintf('%.2f', sacheader.gcarc), ' \circ']});
+    figure; plot(time, wavedata);
+    xlabel('time'); ylabel(cmpname);
+    title({['The waveform of ', sacheader.knetwk, '.', sacheader.kstnm, ' of the event ', ...
+        sacheader.kevnm, sprintf(' %d/%d/%d', sacheader.nzyear, nzmonth, nzday)], ...
+        [sprintf('%d:%d:%.2f (UTC)', nzohour, nzomin, nzosec), ' with \Delta = ', ...
+        sprintf('%.2f', sacheader.gcarc), ' \circ']});
 end
 
 end
@@ -173,15 +174,15 @@ function [month, day] = jday2mmdd(year, jday)
 
 if(mod(year,100) == 0)
     if(mod(year,400) == 0)
-		isleapyear = 1;
-	else
-		isleapyear = 0;
+        isleapyear = 1;
+    else
+        isleapyear = 0;
     end
 else
     if(mod(year,4) == 0)
-		isleapyear = 1;
-	else
-		isleapyear = 0;
+        isleapyear = 1;
+    else
+        isleapyear = 0;
     end
 end
 
@@ -198,7 +199,7 @@ while(jday > monday)
         if(isleapyear == 1)
             monday = 29;
         else
-            monday = 28;
+          monday = 28;
         end
     end
 end
