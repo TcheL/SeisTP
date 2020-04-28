@@ -10,7 +10,7 @@ function [vdep, vlat, vlon, vsv, vp, rho] = US2016VM(filename, pdep, plat, plon)
 % vp:         P wave velocity, km/s, missing_value = 9999.9, FillValue = 9999.0;
 % rho:        density, g/cm^3, missing_value = 9999.0, FillValue = 9999.0;
 %
-% Download the netCDF file from http://ds.iris.edu/files/products/emc/data/US.2016/US.2016.nc,
+% Download the netCDF file from http://ds.iris.edu/files/products/emc/emc-files/US.2016.nc,
 % and refer to http://ds.iris.edu/ds/products/emc-us2016/.
 % 
 % Copyright (c) 2017.03 Tche L. at USTC
@@ -25,30 +25,15 @@ missingvalue = 9999.0;
 
 ncid = netcdf.open(filename, 'NC_NOWRITE');
 
-    dimid = netcdf.inqDimID(ncid, 'depth');
-        [~, mdep] = netcdf.inqDim(ncid, dimid);
-    dimid = netcdf.inqDimID(ncid, 'latitude');
-        [~, mlat] = netcdf.inqDim(ncid, dimid);
-    dimid = netcdf.inqDimID(ncid, 'longitude');
-        [~, mlon] = netcdf.inqDim(ncid, dimid);
-
-    mindep = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_vertical_min'));
-    maxdep = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_vertical_max'));
+    mindep = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_vertical_min');
+    maxdep = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_vertical_max');
     resdep = 0.5;
-    minlat = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lat_min'));
-    maxlat = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lat_max'));
-    reslat = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lat_resolution'));
-    minlon = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lon_min'));
-    maxlon = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lon_max'));
-    reslon = str2double(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), ...
-        'geospatial_lon_resolution'));
+    minlat = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lat_min');
+    maxlat = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lat_max');
+    reslat = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lat_resolution');
+    minlon = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lon_min');
+    maxlon = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lon_max');
+    reslon = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'geospatial_lon_resolution');
 
     if(pdep(1) < mindep)
         warning('pdep: Too small start value of depth, should be >= %g.', mindep);
@@ -90,11 +75,14 @@ ncid = netcdf.open(filename, 'NC_NOWRITE');
         plon(3) = maxlon;
     end
     
-    idep(1:2) = round((pdep([1, 3]) - mindep)/resdep);
+    idep(1) = round((pdep(1) - mindep)/resdep);
+    idep(2) = round((pdep(3) - mindep)/resdep);
     idep(2)   = floor((idep(2) - idep(1))/idep(3)) + 1;
-    ilat(1:2) = round((plat([1, 3]) - minlat)/reslat);
+    ilat(1) = round((plat(1) - minlat)/reslat);
+    ilat(2) = round((plat(3) - minlat)/reslat);
     ilat(2)   = floor((ilat(2) - ilat(1))/ilat(3)) + 1;
-    ilon(1:2) = round((plon([1, 3]) - minlon)/reslon);
+    ilon(1) = round((plon(1) - minlon)/reslon);
+    ilon(2) = round((plon(3) - minlon)/reslon);
     ilon(2)   = floor((ilon(2) - ilon(1))/ilon(3)) + 1;
 
     varid = netcdf.inqVarID(ncid, 'depth');

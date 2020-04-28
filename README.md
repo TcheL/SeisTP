@@ -49,11 +49,11 @@ where `h` is file header information of the example file _examples/IC.XAN.00.BH1
 
 ### Function
 
-Read USA velocity model from US.2016.nc distributed by [Weisen SHEN](http://ciei.colorado.edu/~weisen/index.html).
+Read USA velocity model from US.2016.nc distributed by [Weisen SHEN](http://weisen.wustl.edu/).
 
 ### Usage
 
-Firstly, download the model netCDF file `US.2016.nc` from [the webpage](http://ds.iris.edu/files/products/emc/data/US.2016/US.2016.nc).
+Firstly, download the model netCDF file `US.2016.nc` from [the data link](http://ds.iris.edu/files/products/emc/emc-files/US.2016.nc). And for more details about the model, please visit [the mainpage](http://ds.iris.edu/ds/products/emc-us2016/).
 
 Then under the download directory start **matlab**, and keyboard input in the **matlab** command line window:
 
@@ -67,3 +67,6 @@ Then under the download directory start **matlab**, and keyboard input in the **
 where `pdep`, `plat` and `plon` are setting as [start, stride, end], respectively corresponding to depth, latitude and longitude; `vdep`, `vlat` and `vlon` are respectively returned value of adapted depth, latitude and longitude;  `vsv`, `vp` and `rho` are respectively retured value of S wave velocity, P wave velocity and density.
 
 Finally, you can plot and further process with these data `vdep`, `vlat`, `vlon`, `vsv`, `vp` and `rho`.
+
+![US2016VM-Vp140](./figures/US2016VM-Vp140.png)
+
